@@ -2,10 +2,15 @@
   "name": "bootstrapping-microservices",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "start": "node index.js",
-    "start:dev": "nodemon index.js",
+    "build": "docker build -t video-streaming --file Dockerfile .",
+    "build:alpine": "docker build -t video-streaming-alpine --file Dockerfile-alpine .",
+    "build:slim": "docker build -t video-streaming-slim --file Dockerfile-slim .",
+    "start": "node ./src/index.js",
+    "start:container": "docker run --rm -it -p 3000:3000 video-streaming-slim",
+    "start:db": "docker run --rm -it -p 27017:27107 mongo:latest",
+    "start:dev": "nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

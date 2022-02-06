@@ -1,5 +1,6 @@
 const express = require("express");
 const fs = require("fs");
+const path = require("path");
 
 //
 // Throws an error if the PORT environment variable is missing.
@@ -16,8 +17,8 @@ console.log(`I will be listening on PORT: ${PORT}`);
 const app = express();
 
 app.get("/video", (req, res) => {
-  const path = "SampleVideo_1280x720_1mb.mp4";
-  fs.stat(path, (err, stats) => {
+  const videoPath = path.join("./videos", "SampleVideo_1280x720_1mb.mp4");
+  fs.stat(videoPath, (err, stats) => {
     if (err) {
       console.error("An error occurred ");
       res.sendStatus(500);
@@ -28,7 +29,7 @@ app.get("/video", (req, res) => {
       "Content-Length":  stats.size,
       "Content-Type": "video/mp4",
     });
-    fs.createReadStream(path).pipe(res);
+    fs.createReadStream(videoPath).pipe(res);
   })
 })
 
